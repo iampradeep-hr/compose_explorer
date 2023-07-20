@@ -35,41 +35,49 @@ fun CheckBoxTut() {
         mutableStateOf(false)
     }
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
 //        Checkbox(checked = checked, onCheckedChange = {
 //            checked=!checked
 //        })
 
-        CustomCheckBox(selected = checked, onValueChange ={
-            checked=!checked
-        } )
+        CustomCheckBox(selected = checked, onValueChange = {
+            checked = !checked
+        })
     }
 }
 
 //custom
 @Composable
 fun CustomCheckBox(
-    modifier:Modifier=Modifier,
-    selected:Boolean,
-    onValueChange:(Boolean)->Unit
+    modifier: Modifier = Modifier,
+    selected: Boolean,
+    onValueChange: (Boolean) -> Unit
 ) {
     Box(
         modifier = modifier
             .background(
-                if (selected) Purple200 else Color.Transparent,
+                if (selected) Color.Green.copy(alpha = 0.5f) else Color.Transparent,
                 shape = RoundedCornerShape(8.dp)
             )
-            .border(BorderStroke(2.dp, Purple700), shape = RoundedCornerShape(8.dp))
-            .size(30.dp)
-            .clickable { onValueChange(!selected) },
-
+            .border(BorderStroke(3.dp, Color.Green), shape = RoundedCornerShape(8.dp))
+            .size(30.dp),
         contentAlignment = Alignment.Center
     ) {
-        if (selected) Icon(
-            imageVector = Icons.Default.Check,
-            contentDescription = null,
-            tint = Color.White
-        )
+        if (selected) {
+            Icon(
+                imageVector = Icons.Default.Check,
+                contentDescription = null,
+                tint = Color.White,
+                modifier = Modifier.clickable { onValueChange(false) },
+            )
+        } else {
+            Icon(
+                imageVector = Icons.Default.Check,
+                contentDescription = null,
+                tint = Color.Transparent,
+                modifier = Modifier.clickable { onValueChange(true) },
+            )
+        }
     }
 
 }
