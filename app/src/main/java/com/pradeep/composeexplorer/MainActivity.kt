@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Layout
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -15,6 +16,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -46,6 +48,7 @@ import com.google.accompanist.permissions.rememberPermissionState
 import com.pradeep.composeexplorer.ui.theme.ComposeExplorerTheme
 import com.pradeep.composeexplorer.ui_components.CheckBoxTut
 import com.pradeep.composeexplorer.ui_components.CustomCheckBox
+import com.pradeep.composeexplorer.ui_components.GoogleButton
 import com.pradeep.composeexplorer.ui_components.MarqueeTextLayout
 import kotlin.math.sin
 
@@ -54,68 +57,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeExplorerTheme {
-//                CheckBoxTut()
-//                MarqueeTextLayout()
-
-                var selectedImageUri by remember {
-                    mutableStateOf<Uri?>(null)
-                }
-
-                val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
-                    contract = ActivityResultContracts.PickVisualMedia(),
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
                 ) {
-                    selectedImageUri = it;
+                    GoogleButton()
                 }
-
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(30.dp)
-                ) {
-                    item {
-                        Button(onClick = {
-                            singlePhotoPickerLauncher.launch(
-                               PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                            )
-                        }) {
-                            Text(text = "click")
-                        }
-                    }
-                    item {
-                        selectedImageUri?.let {
-                            AsyncImage(model = selectedImageUri, contentDescription =null)
-                        }
-
-                    }
-                }
-
 
             }
         }
     }
-
-    fun isPermissionGranted(): Boolean {
-        return ContextCompat.checkSelfPermission(
-            this,
-            Manifest.permission.CAMERA
-        ) == PackageManager.PERMISSION_GRANTED
-    }
-
-
-    fun checkAndRequestCameraPermission(
-        context: Context,
-        permission: String,
-        launcher: ManagedActivityResultLauncher<String, Boolean>
-    ) {
-        val permissionCheckResult = ContextCompat.checkSelfPermission(context, permission)
-        if (permissionCheckResult == PackageManager.PERMISSION_GRANTED) {
-            //open camera permission is already granted
-
-        } else {
-            launcher.launch(permission)
-        }
-    }
-
-
 }
-
