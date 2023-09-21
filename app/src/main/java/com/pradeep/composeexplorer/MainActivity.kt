@@ -46,6 +46,7 @@ import coil.request.ImageRequest
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
 import com.pradeep.composeexplorer.ui.theme.ComposeExplorerTheme
+import com.pradeep.composeexplorer.ui_components.AnimatedBorderCard
 import com.pradeep.composeexplorer.ui_components.CheckBoxTut
 import com.pradeep.composeexplorer.ui_components.CustomCheckBox
 import com.pradeep.composeexplorer.ui_components.GoogleButton
@@ -57,13 +58,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeExplorerTheme {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    GoogleButton()
-                }
+               AnimatedBorderCard {
 
+               }
             }
         }
     }
